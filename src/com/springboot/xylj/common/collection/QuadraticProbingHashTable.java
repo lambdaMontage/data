@@ -1,4 +1,4 @@
-package com.springboot.xylj.common.hashTable;
+package com.springboot.xylj.common.collection;
 
 /**
  * hash表项单元数组实现hash表

@@ -1,4 +1,4 @@
-package com.springboot.xylj.common.hashTable;
+package com.springboot.xylj.common.collection;
 
 import java.util.Iterator;
 import java.util.LinkedList;

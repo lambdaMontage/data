@@ -1,10 +1,10 @@
-package com.springboot.xylj.common;
+package com.springboot.xylj;
 
 import com.springboot.xylj.common.binaryTree.LeftistHeap;
 import com.springboot.xylj.common.collection.MyArrayList;
 import com.springboot.xylj.common.collection.MyLinkedList;
-import com.springboot.xylj.common.hashTable.QuadraticProbingHashTable;
-import com.springboot.xylj.common.hashTable.SeparateChainingHashTable;
+import com.springboot.xylj.common.collection.QuadraticProbingHashTable;
+import com.springboot.xylj.common.collection.SeparateChainingHashTable;
 import com.springboot.xylj.common.queue.CustomArrayQueue;
 import com.springboot.xylj.common.queue.CustomLinkedQueue;
 import org.junit.Test;
@@ -155,11 +155,27 @@ public class TestUtils {
         }
     }
 
+    public volatile static int a = 0;
 
 
-    @Test
-    public void readExcelTest(){
+    static class testThread extends Thread {
+        @Override
+        public void run() {
+            for (int i = 0; i < 100; i++) {
+                a++;
+            }
+        }
+    }
 
+    public static void main(String[] args) throws InterruptedException {
+        testThread testThread = new testThread();
+        testThread testThread1 = new testThread();
+        testThread.start();
+        testThread1.start();
+        // join 等待线程结束
+        testThread.join();
+        testThread1.join();
+        System.out.println(a);
     }
 
 }
