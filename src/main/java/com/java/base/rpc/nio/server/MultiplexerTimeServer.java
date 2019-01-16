@@ -7,6 +7,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -48,11 +49,13 @@ public class MultiplexerTimeServer implements Runnable {
             try {
                 selector.select(1000);
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();
+                Iterator<SelectionKey> iterator = selectionKeys.iterator();
                 SelectionKey key = null;
-                selectionKeys.forEach(x -> {
-                    selectionKeys.remove(x);
+                while (iterator.hasNext()) {
+                    key = iterator.next();
+                    iterator.remove();
                     try {
-                        handleInput(x);
+                        handleInput(key);
                     } catch (IOException e) {
                         if (key != null) {
                             key.cancel();
@@ -65,7 +68,7 @@ public class MultiplexerTimeServer implements Runnable {
                             }
                         }
                     }
-                });
+                }
             } catch (Throwable t) {
                 t.printStackTrace();
             }
@@ -85,7 +88,7 @@ public class MultiplexerTimeServer implements Runnable {
                 ServerSocketChannel ssc = (ServerSocketChannel) x.channel();
                 SocketChannel accept = ssc.accept();
                 accept.configureBlocking(false);
-                ssc.register(selector, SelectionKey.OP_READ);
+                accept.register(selector, SelectionKey.OP_READ);
             }
             if (x.isReadable()) {
                 SocketChannel sc = (SocketChannel) x.channel();

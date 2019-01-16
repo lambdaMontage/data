@@ -2,7 +2,7 @@ package com.java.base.rpc.nio.server;
 
 
 /**
- * @Description: NIO时间服务器
+ * @Description: NIO时间客户端
  * @Author: shihao
  * @Date: 2019/1/16 16:54
  * @Version: 1.0
@@ -18,6 +18,6 @@ public class TimeServer {
             }
         }
         MultiplexerTimeServer multiplexerTimeServer = new MultiplexerTimeServer(port);
-        new Thread(multiplexerTimeServer,"NIO-port").start();
+        new Thread(multiplexerTimeServer, "NIO-port").start();
     }
 }
