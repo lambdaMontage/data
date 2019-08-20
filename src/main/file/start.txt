@@ -1,0 +1,11 @@
+# 后端启动脚本
+docker run -d --name=yc-tomcat-test  --restart=always   -e TZ="Asia/Shanghai"  -v  /root/sf/back/file:/var/upload/file  -v /root/sf/back/logs/logs:/home/logs  -v /root/sf/back/logs/tomcat:/usr/local/tomcat  -p 8080:8080   yc-tomcat-test
+
+
+# 重新发布的脚本
+#!/bin/bash
+docker_container_name=yc-tomcat-test
+java_package_name=yc-jms-monitor-risk.war
+rm -rf ./webapps/*
+unzip -q $java_package_name -d webapps/ROOT
+docker restart $docker_container_name
